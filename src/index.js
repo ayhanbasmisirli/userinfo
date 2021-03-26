@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
 import App from "./App"
@@ -8,6 +8,7 @@ import thunk from "redux-thunk"
 import { Provider } from "react-redux"
 import { createStore, combineReducers, applyMiddleware } from "redux"
 import { userReducer } from "./features/userReducer"
+import "./i18n"
 
 const store = createStore(
   combineReducers({ userReducer }),
@@ -16,7 +17,9 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Suspense fallback={<div>Loading...</div>}>
+        <App />
+      </Suspense>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

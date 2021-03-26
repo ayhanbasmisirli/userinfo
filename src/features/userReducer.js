@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit"
 export const initialState = {
   loading: false,
   hasErrors: false,
-  users: []
+  users: [],
+  dialog: false,
+  userinfo: null
 }
 
 const userSlice = createSlice({
@@ -24,6 +26,10 @@ const userSlice = createSlice({
     },
     addUser: (state, action) => {
       return { users: [...state.users, action.payload] }
+    },
+    setDialog: (state, action) => {
+      state.dialog = action.payload.dialog
+      state.userinfo = action.payload.userinfo
     }
   }
 })
@@ -32,7 +38,8 @@ export const {
   getLoading,
   getLoadingSuccess,
   getLoadingFailure,
-  addUser
+  addUser,
+  setDialog
 } = userSlice.actions
 
 export const userReducer = userSlice.reducer
@@ -51,22 +58,3 @@ export function userApiCall() {
     }
   }
 }
-
-// export function userApiPost(data) {
-//   return async (dispatch) => {
-//     dispatch(getLoading())
-
-//     try {
-//       //   console.log("emmi", data)
-//       const response = await axios.post(
-//         `https://jsonplaceholder.typicode.com/users`,
-//         {
-//           data
-//         }
-//       )
-//       dispatch(getLoadingSuccess(response.data))
-//     } catch (error) {
-//       dispatch(getLoadingFailure())
-//     }
-//   }
-// }

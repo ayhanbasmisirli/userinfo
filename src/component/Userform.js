@@ -2,37 +2,67 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
 import { addUser } from "../features/userReducer"
-export default function Userform() {
-  const { register, handleSubmit, errors } = useForm()
-  const dispatch = useDispatch()
+import { v4 as uuidv4 } from "uuid"
+import { useTranslation } from "react-i18next"
 
-  const onSubmit = (data) => {
-    dispatch(addUser(data))
+export default function Userform() {
+  const { register, handleSubmit, errors, watch } = useForm()
+  const dispatch = useDispatch()
+  const { t } = useTranslation()
+
+  const onSubmit = (data, e) => {
+    dispatch(addUser({ id: uuidv4(), ...data }))
+    e.target.reset()
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Name</label>
-        <input name="name" ref={register({ required: true })} />
-        {errors.name && <span>This field is required</span>}
+    <div className="container">
+      <form onSubmit={handleSubmit(onSubmit)} className="userForm">
+        <div className="formitem">
+          <label>{t("Name")}:</label>
 
-        <label>Username</label>
-        <input name="username" ref={register({ required: true })} />
-        {errors.username && <span>This field is required</span>}
+          <input
+            name="name"
+            placeholder={errors.name ? "Required" : ""}
+            ref={register({ required: true })}
+          />
+        </div>
 
-        <label>email</label>
-        <input name="email" ref={register({ required: true })} />
-        {errors.email && <span>This field is required</span>}
+        <div className="formitem">
+          <label>{t("Username")}:</label>
+          <input
+            name="username"
+            placeholder={errors.username ? "Required" : ""}
+            ref={register({ required: true })}
+          />
+        </div>
 
-        <label>Street</label>
-        <input name="street" ref={register({ required: true })} />
-        {errors.street && <span>This field is required</span>}
-        <label>City</label>
-        <input name="city" ref={register({ required: true })} />
-        {errors.city && <span>This field is required</span>}
+        <div className="formitem">
+          <label>{t("Email")}:</label>
+          <input
+            name="email"
+            placeholder={errors.email ? "Required" : ""}
+            ref={register({ required: true })}
+          />
+        </div>
 
-        <button>Submit</button>
+        <div className="formitem">
+          <label>{t("Street")}:</label>
+          <input
+            name="street"
+            placeholder={errors.street ? "Required" : ""}
+            ref={register({ required: true })}
+          />
+        </div>
+        <div className="formitem">
+          <label>{t("City")}:</label>
+          <input
+            name="city"
+            placeholder={errors.city ? "Required" : ""}
+            ref={register({ required: true })}
+          />
+        </div>
+        <button className="buttonSubmit">Add</button>
       </form>
     </div>
   )
