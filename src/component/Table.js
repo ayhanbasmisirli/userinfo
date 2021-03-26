@@ -19,7 +19,7 @@ export default function Table({ handleRow }) {
                 <th>{t("Adress Street")}</th>
               </>
             ) : (
-              ""
+              <th></th>
             )}
           </tr>
         </thead>

@@ -1,7 +1,7 @@
 import React from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
-import { addUser } from "../features/userReducer"
+import { addUser, subCheck } from "../features/userReducer"
 import { v4 as uuidv4 } from "uuid"
 import { useTranslation } from "react-i18next"
 
@@ -9,6 +9,8 @@ export default function Userform() {
   const { register, handleSubmit, errors, watch } = useForm()
   const dispatch = useDispatch()
   const { t } = useTranslation()
+
+  const submissionCheck = watch("name")
 
   const onSubmit = (data, e) => {
     dispatch(addUser({ id: uuidv4(), ...data }))
@@ -19,7 +21,7 @@ export default function Userform() {
     <div className="container">
       <form onSubmit={handleSubmit(onSubmit)} className="userForm">
         <div className="formitem">
-          <label>{t("Name")}:</label>
+          <label>{t("Name")}</label>
 
           <input
             name="name"
@@ -29,7 +31,7 @@ export default function Userform() {
         </div>
 
         <div className="formitem">
-          <label>{t("Username")}:</label>
+          <label>{t("Username")}</label>
           <input
             name="username"
             placeholder={errors.username ? "Required" : ""}
@@ -38,7 +40,7 @@ export default function Userform() {
         </div>
 
         <div className="formitem">
-          <label>{t("Email")}:</label>
+          <label>{t("Email")}</label>
           <input
             name="email"
             placeholder={errors.email ? "Required" : ""}
@@ -47,7 +49,7 @@ export default function Userform() {
         </div>
 
         <div className="formitem">
-          <label>{t("Street")}:</label>
+          <label>{t("Street")}</label>
           <input
             name="street"
             placeholder={errors.street ? "Required" : ""}
@@ -55,14 +57,14 @@ export default function Userform() {
           />
         </div>
         <div className="formitem">
-          <label>{t("City")}:</label>
+          <label>{t("City")}</label>
           <input
             name="city"
             placeholder={errors.city ? "Required" : ""}
             ref={register({ required: true })}
           />
         </div>
-        <button className="buttonSubmit">Add</button>
+        <button className="buttonSubmit">{t("Add")}</button>
       </form>
     </div>
   )

@@ -6,9 +6,11 @@ export default function Navbar() {
   const changeLanguage = (event) => {
     i18n.changeLanguage(event.target.value)
   }
+  const { t } = useTranslation()
   return (
     <div className="navbar">
-      <Link to="/">Main</Link>
+      <Link to="/">{t("Main")} </Link>
+
       <select onChange={changeLanguage}>
         <option value="en">EN</option>
         <option value="tr">TR</option>
