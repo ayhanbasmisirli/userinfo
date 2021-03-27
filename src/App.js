@@ -8,7 +8,12 @@ import Main from "./screens/Main"
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router
+        getUserConfirmation={(message, callback) => {
+          const allowTransition = window.confirm(message)
+          callback(allowTransition)
+        }}
+      >
         <Navbar />
         <Route exact path="/home" component={Home} />
         <Route exact path="/" component={Main} />

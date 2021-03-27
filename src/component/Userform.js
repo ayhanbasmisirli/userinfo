@@ -1,21 +1,21 @@
 import React from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
-import { addUser, subCheck } from "../features/userReducer"
+import { addUser } from "../features/userReducer"
 import { v4 as uuidv4 } from "uuid"
 import { useTranslation } from "react-i18next"
+import { Prompt } from "react-router-dom"
 
 export default function Userform() {
-  const { register, handleSubmit, errors, watch } = useForm()
+  const { register, handleSubmit, errors, formState } = useForm()
   const dispatch = useDispatch()
   const { t } = useTranslation()
-
-  const submissionCheck = watch("name")
 
   const onSubmit = (data, e) => {
     dispatch(addUser({ id: uuidv4(), ...data }))
     e.target.reset()
   }
+  const { isDirty } = formState
 
   return (
     <div className="container">
@@ -66,6 +66,10 @@ export default function Userform() {
         </div>
         <button className="buttonSubmit">{t("Add")}</button>
       </form>
+      <Prompt
+        when={isDirty}
+        message={t("Are you sure you want to leave? Form is not empty")}
+      />
     </div>
   )
 }

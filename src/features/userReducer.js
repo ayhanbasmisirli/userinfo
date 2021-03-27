@@ -5,8 +5,7 @@ export const initialState = {
   hasErrors: false,
   users: [],
   dialog: false,
-  userinfo: null,
-  submission: null
+  userinfo: null
 }
 
 const userSlice = createSlice({
@@ -31,9 +30,6 @@ const userSlice = createSlice({
     setDialog: (state, action) => {
       state.dialog = action.payload.dialog
       state.userinfo = action.payload.userinfo
-    },
-    subCheck: (state, action) => {
-      state.submission = action.payload
     }
   }
 })
@@ -43,8 +39,7 @@ export const {
   getLoadingSuccess,
   getLoadingFailure,
   addUser,
-  setDialog,
-  subCheck
+  setDialog
 } = userSlice.actions
 
 export const userReducer = userSlice.reducer
